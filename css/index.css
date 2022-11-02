@@ -33,6 +33,13 @@ article.post-view__article .article__content h6,
 article.post-view__article .article__content p {
   margin: 1em 0;
 }
+article.post-view__article .article__content h2,
+article.post-view__article .article__content h3,
+article.post-view__article .article__content h4,
+article.post-view__article .article__content h5,
+article.post-view__article .article__content h6 {
+  padding-top: 1rem;
+}
 article.post-view__article .article__content h1,
 article.post-view__article .article__content h2 {
   font-size: 3.4rem;
@@ -49,18 +56,19 @@ article.post-view__article .article__content h5 {
 }
 article.post-view__article .article__content h6 {
   font-size: 1.8rem;
-  line-height: 2.6rem;
+  line-height: 2.8rem;
 }
 article.post-view__article .article__content p,
 article.post-view__article .article__content li,
 article.post-view__article .article__content ol,
 article.post-view__article .article__content table,
 article.post-view__article .article__content code {
-  font-size: 1.4rem;
-  line-height: 2.2rem;
+  font-size: 1.6rem;
+  line-height: 2.6rem;
 }
 article.post-view__article .article__content small {
-  font-size: 1rem;
+  font-size: 1.4rem;
+  line-height: 2.4rem;
 }
 article.post-view__article .article__content a {
   box-shadow: inset 0 -0.1em 0 #333;
@@ -82,32 +90,49 @@ article.post-view__article .article__content .gutter {
 }
 article.post-view__article .article__content code.hljs {
   font-size: 1.4rem;
-  line-height: 2.2rem;
+  line-height: 2.4rem;
   width: 100%;
   overflow-x: scroll;
   max-width: 80rem;
   padding: 0.5em 1em;
   margin: 1em 0;
+  border: 1px solid #ebc65a;
+  box-shadow: 0.2em 0.2em 0 0 #ebc65a;
 }
 article.post-view__article .article__content table code.hljs {
   margin: 0;
 }
 article.post-view__article .article__content code:not(.hljs) {
   font-size: 1.4rem;
-  line-height: 2.2rem;
+  line-height: 2.4rem;
+  color: #333;
+  font-weight: bold;
+  border: 0.7px solid #ebc65a;
+  background: #fff;
+  box-shadow: 0.07em 0.07em 0 0 #ebc65a;
+  padding: 0.1em 0.4em;
+  margin: 0 0.3em;
+  vertical-align: bottom;
+}
+article.post-view__article .article__content file {
+  font-size: 1.4rem;
+  line-height: 2.4rem;
+  text-align: center;
   color: #333;
   font-weight: bold;
   border: 1px solid #ebc65a;
   background: #fff;
-  box-shadow: 0.2em 0.2em 0 0 #ebc65a;
+  box-shadow: 0.2em 0 0 0 #ebc65a;
   padding: 0.1em 0.4em;
-  margin: 0 0.4em;
   vertical-align: bottom;
+  display: block;
+  margin-right: auto;
+  transform: translateY(2.4rem);
 }
 article.post-view__article .article__content ul,
 article.post-view__article .article__content ol {
   font-size: 1.6rem;
-  line-height: 2.4rem;
+  line-height: 2.6rem;
   padding-left: 2em;
 }
 article.post-view__article .article__content ul li,
@@ -157,6 +182,11 @@ article.post-view__article .article__content table th:first-child {
 article.post-view__article .article__content .mjx-chtml {
   font-size: 1.6rem;
 }
+article.post-view__article .article__content hr {
+  border: 0;
+  border-top: 1px dashed #ccc;
+  margin: 2rem 0;
+}
 @media screen and (max-width: 780px) {
   .post-view__article {
     padding: 0rem 1rem 6rem 1rem;
@@ -175,7 +205,7 @@ article.post-view__article .article__content .mjx-chtml {
   padding: 3rem 0;
   background: #ebc65a;
   font-size: 1.4rem;
-  line-height: 2.2rem;
+  line-height: 2.4rem;
 }
 @media screen and (max-width: 580px) {
   .footer {
@@ -203,7 +233,7 @@ article.post-view__article .article__content .mjx-chtml {
 }
 .head__inner p {
   font-size: 1.4rem;
-  line-height: 2.2rem;
+  line-height: 2.4rem;
 }
 .bottom-line-1 {
   height: 3px;
@@ -265,8 +295,8 @@ article.post-view__article .article__content .mjx-chtml {
   box-shadow: inset 0 -0.8em 0 #ebc65a;
 }
 .posts-item__title {
-  font-size: 5.2rem;
-  line-height: 6.6rem;
+  font-size: 4.2rem;
+  line-height: 5.6rem;
   margin-bottom: 6rem;
 }
 .posts-item__title a {
@@ -287,7 +317,7 @@ article.post-view__article .article__content .mjx-chtml {
 }
 .posts-item__excerpt {
   font-size: 1.4rem;
-  line-height: 2.2rem;
+  line-height: 2.4rem;
   margin: 2rem 0 0 0;
   color: #444;
 }
@@ -298,7 +328,7 @@ article.post-view__article .article__content .mjx-chtml {
 .post__date {
   position: relative;
   font-size: 1.4rem;
-  line-height: 2.2rem;
+  line-height: 2.4rem;
   display: inline-block;
 }
 .post__tags::before,
@@ -362,7 +392,7 @@ article.post-view__article .article__content .mjx-chtml {
 }
 .sidebar {
   font-size: 1.4rem;
-  line-height: 2.2rem;
+  line-height: 2.4rem;
   padding: 2rem;
   margin: 2rem;
   border-left: 1px solid #d3d3d3;
@@ -448,7 +478,7 @@ article.post-view__article .article__content .mjx-chtml {
 .paginator {
   text-align: center;
   font-size: 1.4rem;
-  line-height: 2.2rem;
+  line-height: 2.4rem;
   padding: 5rem 0;
 }
 .paginator a {
@@ -485,8 +515,8 @@ article.post-view__article .article__content .mjx-chtml {
 }
 .paginator .page-number {
   font-size: 1.8rem;
-  line-height: 2.6rem;
-  padding: 0 0.5em;
+  line-height: 2.8rem;
+  padding: 0 0.7em;
 }
 @media screen and (max-width: 580px) {
   .footer {
@@ -503,7 +533,7 @@ article.post-view__article .article__content .mjx-chtml {
 .pre-next .pre-button,
 .pre-next .next-button {
   font-size: 1.4rem;
-  line-height: 2.2rem;
+  line-height: 2.4rem;
   padding: 1em;
   position: relative;
 }
@@ -547,7 +577,7 @@ article.post-view__article .article__content .mjx-chtml {
 .location-bar .text {
   text-align: center;
   font-size: 1.4rem;
-  line-height: 2.2rem;
+  line-height: 2.4rem;
   margin: 0.2em 0;
   padding: 0 4rem;
   overflow: hidden;

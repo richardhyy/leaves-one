@@ -35,7 +35,7 @@ gtag('config', 'xx-xxxxxxx-xx');</script><link rel="stylesheet" href="/css/tocbo
 <blockquote>
 <p>This is the second part of the series. You can find part 1 <a href="/2022/11/01/lwjgl3-with-thinmatrix-opengl-3d-game-tutorial">here</a>.</p>
 </blockquote>
-<h2 id="Modifications-to-the-improved-OBJFileLoader-T16"><a href="#Modifications-to-the-improved-OBJFileLoader-T16" class="headerlink" title="Modifications to the improved OBJFileLoader (T16)"></a>Modifications to the improved <strong>OBJFileLoader</strong> (T16)</h2><p>In tutorial 16, an improved OBJFileLoader is introduced. To make it work with the latest LWJGL, we need to make a few changes.</p>
+<h2 id="Modifications-to-the-improved-OBJ-Loader-T16"><a href="#Modifications-to-the-improved-OBJ-Loader-T16" class="headerlink" title="Modifications to the improved OBJ Loader (T16)"></a>Modifications to the improved OBJ Loader (T16)</h2><p>In tutorial 16, an <strong>improved OBJFileLoader</strong> is introduced. To make it work with the latest LWJGL, we need to make a few changes.</p>
 <p>Firstly, <strong>replace</strong> these import in the <code>OBJFileLoader</code> class:</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">import</span> org.lwjgl.util.vector.Vector2f;<br><span class="hljs-keyword">import</span> org.lwjgl.util.vector.Vector3f;<br></code></pre></td></tr></table></figure>
 
@@ -51,6 +51,15 @@ gtag('config', 'xx-xxxxxxx-xx');</script><link rel="stylesheet" href="/css/tocbo
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">import</span> org.joml.Vector3f;<br></code></pre></td></tr></table></figure>
 
 <p><divider></divider></p>
+<p><strong>Now, the new OBJ loader is ready to use. But I made a few more changes to it.</strong></p>
+<p>Replace all occurrences of <code>(float) Float.valueOf</code> with <code>Float.parseFloat</code> in the <code>OBJFileLoader</code> class.</p>
+<p>For example, the following code:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java">Vector3f vertex = <span class="hljs-keyword">new</span> Vector3f((<span class="hljs-keyword">float</span>) Float.valueOf(currentLine[<span class="hljs-number">1</span>]),<br>                               (<span class="hljs-keyword">float</span>) Float.valueOf(currentLine[<span class="hljs-number">2</span>]),<br>                               (<span class="hljs-keyword">float</span>) Float.valueOf(currentLine[<span class="hljs-number">3</span>]));<br></code></pre></td></tr></table></figure>
+
+<p>can be changed to:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java">Vector3f vertex = <span class="hljs-keyword">new</span> Vector3f(Float.parseFloat(currentLine[<span class="hljs-number">1</span>]),<br>                               Float.parseFloat(currentLine[<span class="hljs-number">2</span>]),<br>                               Float.parseFloat(currentLine[<span class="hljs-number">3</span>]));<br></code></pre></td></tr></table></figure>
+
+<p><divider></divider></p>
 <p>You can also simplify some ArrayList declarations by using <strong>diamonds</strong> in <code>OBJFileLoader</code>:</p>
 <p>Replace</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java">List&lt;Vertex&gt; vertices = <span class="hljs-keyword">new</span> ArrayList&lt;Vertex&gt;();<br>List&lt;Vector2f&gt; textures = <span class="hljs-keyword">new</span> ArrayList&lt;Vector2f&gt;();<br>List&lt;Vector3f&gt; normals = <span class="hljs-keyword">new</span> ArrayList&lt;Vector3f&gt;();<br>List&lt;Integer&gt; indices = <span class="hljs-keyword">new</span> ArrayList&lt;Integer&gt;();<br></code></pre></td></tr></table></figure>
@@ -58,6 +67,19 @@ gtag('config', 'xx-xxxxxxx-xx');</script><link rel="stylesheet" href="/css/tocbo
 <p>with</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java">List&lt;Vertex&gt; vertices = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();<br>List&lt;Vector2f&gt; textures = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();<br>List&lt;Vector3f&gt; normals = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();<br>List&lt;Integer&gt; indices = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();<br></code></pre></td></tr></table></figure>
 
+<p><divider></divider></p>
+<p>In the tutorial, to load a model, before we apply the <code>OBJFileLoader</code> class, what we need is:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java">RawModel model = OBJLoader.loadObjModel(<span class="hljs-string">&quot;model_name&quot;</span>, loader);<br></code></pre></td></tr></table></figure>
+
+<p>But now it is:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java">ModelData treeModelData = OBJFileLoader.loadOBJ(<span class="hljs-string">&quot;model_name&quot;</span>);<br>RawModel model = loader.loadToVAO(treeModelData.getVertices(), treeModelData.getTextureCoords(),<br>                                  treeModelData.getNormals(), treeModelData.getIndices());<br></code></pre></td></tr></table></figure>
+
+<p>So I added a reload method to the <code>Loader</code> class:</p>
+<p><file>Loader.java</file></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> RawModel <span class="hljs-title">loadToVAO</span><span class="hljs-params">(ModelData modelData)</span> </span>&#123;<br>    <span class="hljs-keyword">return</span> loadToVAO(modelData.getVertices(), modelData.getTextureCoords(), modelData.getNormals(), modelData.getIndices());<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>Then we can use it like this:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java">RawModel model = loader.loadToVAO(OBJFileLoader.loadOBJ(<span class="hljs-string">&quot;model_name&quot;</span>));<br></code></pre></td></tr></table></figure>
 
 <br>
 <hr>

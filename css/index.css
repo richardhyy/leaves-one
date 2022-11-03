@@ -187,6 +187,19 @@ article.post-view__article .article__content hr {
   border-top: 1px dashed #ccc;
   margin: 2rem 0;
 }
+article.post-view__article .article__content divider {
+  display: block;
+  margin: 1rem 0;
+  text-align: center;
+}
+article.post-view__article .article__content divider:before {
+  content: '···';
+  color: #ccc;
+  font-size: 2rem;
+  font-weight: bold;
+  letter-spacing: 2rem;
+  width: 1em;
+}
 @media screen and (max-width: 780px) {
   .post-view__article {
     padding: 0rem 1rem 6rem 1rem;

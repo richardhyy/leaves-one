@@ -108,6 +108,22 @@ gtag('config', 'xx-xxxxxxx-xx');</script><link rel="stylesheet" href="/css/tocbo
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">if</span> (Keyboard.isKeyDown(GLFW_KEY_SPACE)) &#123;<br>    <span class="hljs-keyword">if</span> (upwardsSpeed == <span class="hljs-number">0</span>) &#123;<br>        jump();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 
+<h2 id="Fix-flickering-when-entity-moves"><a href="#Fix-flickering-when-entity-moves" class="headerlink" title="Fix flickering when entity moves"></a>Fix flickering when entity moves</h2><p>When moving the entity, you will notice that the entity will flicker.</p>
+<p><img src="flickering.gif" alt="Player flickering"></p>
+<p>This can be easily fixed by making the following changes to <code>DisplayManager</code>.</p>
+<p>First, append the following code right after any <code>glfwWindowHint</code> calls:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java">glfwWindowHint(GLFW_DOUBLEBUFFER, GLFW_FALSE);<br></code></pre></td></tr></table></figure>
+
+<p>Next, disable v-sync by changing the following code:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// Enable v-sync</span><br>glfwSwapInterval(<span class="hljs-number">1</span>);<br></code></pre></td></tr></table></figure>
+
+<p>to</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java">glfwSwapInterval(<span class="hljs-number">0</span>);    &lt;- ❗️ Here<br></code></pre></td></tr></table></figure>
+
+<p>Finally, add the following line to <code>updateDisplay</code> method, after <code>glfwSwapBuffers</code>:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java">glFlush();<br></code></pre></td></tr></table></figure>
+
+<p><img src="no_flickering.gif" alt="Flikering fixed"></p>
 <h2 id="Get-the-missing-Mouse-class-back-T19"><a href="#Get-the-missing-Mouse-class-back-T19" class="headerlink" title="Get the missing Mouse class back (T19)"></a>Get the missing Mouse class back (T19)</h2><blockquote>
 <p><strong>Note</strong>: This section is based on <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=PoxDDZmctnU">Tutorial 19: 3rd Person Camera</a>.</p>
 </blockquote>

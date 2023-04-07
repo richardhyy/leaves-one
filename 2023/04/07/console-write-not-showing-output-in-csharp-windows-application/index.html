@@ -35,7 +35,7 @@ gtag('config', 'xx-xxxxxxx-xx');</script><link rel="stylesheet" href="/css/tocbo
 <p><em><strong>Off-topic Note:</strong> monochromatic ≠ single channel (or grayscale). Monochromatic means that the image is either black or white and has only one bit per pixel.</em></p>
 </blockquote>
 <p>For simplicity, I created a WinForm project and added some logic to the <code>Program.cs</code> which includes some <code>Console.WriteLine()</code> statements. </p>
-<h1 id="The-problem"><a href="#The-problem" class="headerlink" title="The problem"></a>The problem</h1><p>However, when I run the program in terminal, the <strong>console</strong> output is not shown. </p>
+<h1 id="Problem"><a href="#Problem" class="headerlink" title="Problem"></a>Problem</h1><p>However, when I run the program in terminal, the <strong>console</strong> output is not shown. </p>
 <p><img src="console_no_output.jpg" alt="Not showing output"></p>
 <h1 id="Attempt"><a href="#Attempt" class="headerlink" title="Attempt"></a>Attempt</h1><p>I tried the following <a target="_blank" rel="noopener" href="https://stackoverflow.com/a/4363184">solution</a>:</p>
 <p><file>Program.cs</file></p>
@@ -43,7 +43,7 @@ gtag('config', 'xx-xxxxxxx-xx');</script><link rel="stylesheet" href="/css/tocbo
 
 <p>This actually works, but there’s a problem: <strong>what it actually does is to create a new console window</strong>. What I want is to <strong>print the output to the terminal window where I ran the program</strong>.</p>
 <p><img src="new_console_pops_up.jpg" alt="New console window"></p>
-<h1 id="The-solution"><a href="#The-solution" class="headerlink" title="The solution"></a>The solution</h1><p>Finally I found a working solution which is way too simple:<br><strong>Go to the project properties, and change the output type to <code>Console Application</code>.</strong></p>
+<h1 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h1><p>Finally I found a working solution which is way too simple:<br><strong>Go to the project properties, and change the output type to <code>Console Application</code>.</strong></p>
 <br />
 
 <p>Or, you can edit the <code>.csproj</code> file and change the <code>OutputType</code> to <code>Exe</code>.</p>

@@ -280,6 +280,11 @@ divider:before {
 #comment-section button.g-recaptcha:hover {
   $color-black-3: #1f1f1f;
 }
+#comment-section .recaptcha-policy {
+  text-align: center;
+  color: #929292;
+  margin-top: 1px;
+}
 #comment-section .comment {
   padding: 20px;
   border-bottom: 1px solid #ccc;

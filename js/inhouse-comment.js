@@ -3,6 +3,7 @@ var apiURL = 'https://api.eumc.cc/comment/';
 var commentContainerID = 'comments-list';
 var submissionResultContainerID = 'comment-submission-result'; // Error: #comment-submission-result.error; Success: #comment-submission-result.success
 var submitButtonID = 'comment-submit-button';
+var submitButtonOriginalText = document.getElementById(submitButtonID).innerText;
 
 function decodeHtmlSpecialChars(encodedString) {
     const parser = new DOMParser();
@@ -58,9 +59,8 @@ async function submitComment(token) {
     const resultDisplay = document.getElementById(submissionResultContainerID);
     resultDisplay.style.display = 'none';
     const submitButton = document.getElementById(submitButtonID);
-    const submitButtonOriginalText = submitButton.textContent;
     submitButton.disabled = true;
-    submitButton.textContent = 'Please wait...';
+    submitButton.innerText = 'Submitting...';
 
     try {
         const response = await fetch(`${apiURL}?id=${postId}`, {
@@ -94,5 +94,5 @@ async function submitComment(token) {
     }
     
     submitButton.disabled = false;
-    submitButton.textContent = submitButtonOriginalText;
+    submitButton.innerText = submitButtonOriginalText;
 }

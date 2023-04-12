@@ -275,10 +275,14 @@ divider:before {
   font-size: 1.6rem;
   font-weight: bold;
   cursor: pointer;
-  transition: #222 0.3s;
+  transition: 0.3s;
 }
 #comment-section button.g-recaptcha:hover {
-  $color-black-3: #1f1f1f;
+  background-color: #444;
+}
+#comment-section button.g-recaptcha:disabled {
+  background-color: #929292;
+  cursor: wait;
 }
 #comment-section .recaptcha-policy {
   text-align: center;

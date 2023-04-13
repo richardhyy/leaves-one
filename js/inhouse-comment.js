@@ -4,6 +4,7 @@ var commentContainerID = 'comments-list';
 var submissionResultContainerID = 'comment-submission-result'; // Error: #comment-submission-result.error; Success: #comment-submission-result.success
 var submitButtonID = 'comment-submit-button';
 var submitButtonOriginalText = document.getElementById(submitButtonID).innerText;
+var rememberMeCheckboxID = 'remember-me';
 
 function decodeHtmlSpecialChars(encodedString) {
     const parser = new DOMParser();
@@ -76,6 +77,9 @@ async function submitComment(token) {
             resultDisplay.style.display = 'block';
             resultDisplay.textContent = 'Comment submitted successfully.';
             resultDisplay.className = 'success';
+
+            // Save account info on success
+            saveAccountInfo();
         } else {
             const errorData = await response.json();
             console.error(errorData)
@@ -96,3 +100,62 @@ async function submitComment(token) {
     submitButton.disabled = false;
     submitButton.innerText = submitButtonOriginalText;
 }
+
+// MARK: - Cookie Related Functions
+
+function setCookie(name, value, days) {
+    let expires = '';
+    if (days) {
+        const date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = '; expires=' + date.toUTCString();
+    }
+    document.cookie = name + '=' + encodeURIComponent(value) + expires + '; path=/';
+}
+
+function getCookie(name) {
+    const nameEQ = name + '=';
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+        let c = cookies[i];
+        while (c.charAt(0) === ' ') {
+            c = c.substring(1, c.length);
+        }
+        if (c.indexOf(nameEQ) === 0) {
+            return decodeURIComponent(c.substring(nameEQ.length, c.length));
+        }
+    }
+    return null;
+}
+
+function deleteCookie(name) {
+    setCookie(name, '', -1);
+}
+
+function saveAccountInfo() {
+    const username = document.getElementById('username').value;
+    const email = document.getElementById('email').value;
+    const rememberMe = document.getElementById(rememberMeCheckboxID).checked;
+
+    if (rememberMe) {
+        setCookie('username', username, 365);
+        setCookie('email', email, 365);
+    } else {
+        deleteCookie('username');
+        deleteCookie('email');
+    }
+}
+
+function loadAccountInfo() {
+    const username = getCookie('username');
+    const email = getCookie('email');
+
+    if (username) {
+        document.getElementById('username').value = username;
+    }
+    if (email) {
+        document.getElementById('email').value = email;
+    }
+}
+
+loadAccountInfo();

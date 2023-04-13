@@ -212,6 +212,11 @@ divider:before {
   article.post-view__article .article__content .mjx-chtml {
     font-size: 1.2rem;
   }
+  #comment-section .row .col {
+    width: 100%;
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+  }
 }
 .grecaptcha-badge {
   visibility: hidden;
@@ -227,6 +232,27 @@ divider:before {
   display: grid;
   grid-gap: 10px;
 }
+#comment-section .row {
+  width: 100%;
+}
+#comment-section .row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+#comment-section .col {
+  float: left;
+  width: 50%;
+}
+#comment-section .col:first-child {
+  padding-right: 10px;
+}
+#comment-section .col:last-child {
+  padding-left: 10px;
+}
+#comment-section .row label {
+  margin-bottom: 10px;
+}
 #comment-section label {
   display: block;
   font-size: 1.6rem;
@@ -239,7 +265,6 @@ divider:before {
   border: 1px solid #ccc;
   border-radius: 3px;
   font-size: 1.6rem;
-  margin-bottom: 10px;
 }
 #comment-section textarea {
   margin-bottom: 0px;
@@ -247,6 +272,51 @@ divider:before {
 #comment-section textarea#content {
   resize: vertical;
   min-height: 100px;
+}
+#comment-section .checkbox-wrapper {
+  vertical-align: middle;
+  margin-left: auto;
+}
+#comment-section .checkbox-wrapper input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  display: inline-block;
+  position: relative;
+  margin: 0 10px 0 0;
+  vertical-align: middle;
+  border: 2px solid #444;
+  border-radius: 3px;
+  appearance: none;
+  background-color: transparent;
+  cursor: pointer;
+  transition: 0.3s;
+}
+#comment-section .checkbox-wrapper input[type="checkbox"]:checked {
+  background-color: #333;
+}
+#comment-section .checkbox-wrapper input[type="checkbox"]:checked::after {
+  content: '';
+  display: block;
+  width: 6px;
+  height: 12px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  position: absolute;
+  top: 1px;
+  left: 5px;
+}
+#comment-section .checkbox-wrapper label {
+  display: inline-block;
+  vertical-align: middle;
+  cursor: pointer;
+}
+#comment-section .inline {
+  position: relative;
+  display: inline-block;
+}
+#comment-section .margin-bottom-5px {
+  margin-bottom: 5px;
 }
 #comment-submission-result {
   padding: 14px;
@@ -284,7 +354,7 @@ divider:before {
   background-color: #929292;
   cursor: wait;
 }
-#comment-section .recaptcha-policy {
+#comment-section .policy-text {
   text-align: center;
   color: #929292;
   margin-top: 1px;

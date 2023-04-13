@@ -360,8 +360,9 @@ divider:before {
   margin-top: 1px;
 }
 #comment-section .comment {
-  padding: 20px;
-  border-bottom: 1px solid #ccc;
+  margin: 0 20px 0 20px;
+  padding: 20px 0 20px 0;
+  border-bottom: 1px dashed #ccc;
 }
 #comment-section .comment:last-child {
   border-bottom: none;

@@ -5,6 +5,7 @@ var submissionResultContainerID = 'comment-submission-result'; // Error: #commen
 var submitButtonID = 'comment-submit-button';
 var submitButtonOriginalText = document.getElementById(submitButtonID).innerText;
 var rememberMeCheckboxID = 'remember-me';
+var contentInputID = 'content';
 
 function decodeHtmlSpecialChars(encodedString) {
     const parser = new DOMParser();
@@ -32,11 +33,17 @@ async function fetchComments() {
             timestamp.className = 'comment-timestamp';
             timestamp.textContent = new Date(comment.timestamp * 1000).toLocaleString();
 
+            const replyButton = document.createElement('button');
+            replyButton.className = 'comment-reply-button';
+            replyButton.title = `Reply to ${comment.username}`;
+            replyButton.onclick = () => replyToComment(comment.username);
+
             const content = document.createElement('p');
             content.textContent = decodeHtmlSpecialChars(comment.content);
 
             commentElement.appendChild(username);
             commentElement.appendChild(timestamp);
+            commentElement.appendChild(replyButton);
             commentElement.appendChild(content);
             commentsList.appendChild(commentElement);
         });
@@ -70,16 +77,16 @@ async function submitComment(token) {
         });
 
         if (response.status === 201) {
-            fetchComments();
-            document.getElementById('comment-form').reset();
+            saveAccountInfo(); // Save account info on success
+            document.getElementById('content').value = '';
             grecaptcha.reset();
+
+            fetchComments();
 
             resultDisplay.style.display = 'block';
             resultDisplay.textContent = 'Comment submitted successfully.';
             resultDisplay.className = 'success';
 
-            // Save account info on success
-            saveAccountInfo();
         } else {
             const errorData = await response.json();
             console.error(errorData)
@@ -99,6 +106,12 @@ async function submitComment(token) {
     
     submitButton.disabled = false;
     submitButton.innerText = submitButtonOriginalText;
+}
+
+function replyToComment(username) {
+    const content = document.getElementById(contentInputID);
+    content.value = `@${username} ` + content.value;
+    content.focus();
 }
 
 // MARK: - Cookie Related Functions

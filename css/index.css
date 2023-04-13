@@ -388,6 +388,11 @@ divider:before {
   padding: 2px;
   transition: 0.3s;
 }
+@-moz-document url-prefix() {
+  #comment-section .comment-reply-button {
+    vertical-align: top;
+  }
+}
 #comment-section .comment-reply-button:hover {
   filter: brightness(0.1);
 }

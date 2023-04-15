@@ -388,6 +388,58 @@ divider:before {
   padding: 2px;
   transition: 0.3s;
 }
+#comment-section .language-identifier {
+  margin-bottom: 0.2em;
+  color: #ccc;
+  font-family: monospace;
+  font-size: 1.4rem;
+}
+#comment-section code {
+  font-size: 1.4rem;
+}
+#comment-section .language-identifier::before {
+  content: '```';
+}
+#comment-section .click-to-load {
+  background-color: rgba(204,204,204,0.5);
+  padding: 2px 4px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+#comment-section .prefix-image-icon::before {
+  background-image: url("/img/image.svg");
+  background-size: 1.4rem 1.4rem;
+  display: inline-block;
+  content: '';
+  width: 1.4rem;
+  height: 1.4rem;
+  margin-right: 5px;
+}
+#comment-section .prefix-link-icon::before {
+  background-image: url("/img/link.svg");
+  background-size: 1.4rem 1.4rem;
+  display: inline-block;
+  content: '';
+  width: 1.4rem;
+  height: 1.4rem;
+  margin-right: 5px;
+}
+#comment-section .suffix-external::after {
+  opacity: 0;
+  content: '';
+  -webkit-transition: 0.3s;
+  -moz-transition: 0.3s;
+  -ms-transition: 0.3s;
+  -o-transition: 0.3s;
+  trasition: 0.3s;
+}
+#comment-section .suffix-external:hover::after {
+  opacity: 1;
+  color: #a72800;
+  content: ' (external link)';
+  display: inline-block;
+  margin-left: 5px;
+}
 @-moz-document url-prefix() {
   #comment-section .comment-reply-button {
     vertical-align: top;

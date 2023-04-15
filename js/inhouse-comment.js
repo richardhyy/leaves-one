@@ -13,6 +13,34 @@ function decodeHtmlSpecialChars(encodedString) {
     return dom.body.textContent;
 }
 
+function markdownToHtml(input) {
+    const rules = [
+        // { regex: /(?:^|\n)###### (.+)/g, replace: '<h6>$1</h6>' },
+        // { regex: /(?:^|\n)##### (.+)/g, replace: '<h5>$1</h5>' },
+        // { regex: /(?:^|\n)#### (.+)/g, replace: '<h4>$1</h4>' },
+        // { regex: /(?:^|\n)### (.+)/g, replace: '<h3>$1</h3>' },
+        // { regex: /(?:^|\n)## (.+)/g, replace: '<h2>$1</h2>' },
+        // { regex: /(?:^|\n)# (.+)/g, replace: '<h1>$1</h1>' },
+        { regex: /\*\*(.+?)\*\*/g, replace: '<strong>$1</strong>' },
+        { regex: /\*(.+?)\*/g, replace: '<em>$1</em>' },
+        // { regex: /```([\s\S]+?)```/g, replace: '<pre><code>$1</code></pre>' },
+        { regex: /```(\w*)\n([\s\S]+?)```/g, replace: '<span class="language-identifier">$1</span><pre><code>$2</code></pre>' },
+        { regex: /`(.+?)`/g, replace: '<code>$1</code>' },
+        // { regex: /!\[(.*?)\]\((.+?)\)/g, replace: '<img src="$2" alt="$1">' },
+        { regex: /!\[(.*?)\]\((.+?)\)/g, replace: '<span class="click-to-load prefix-image-icon" onclick="this.outerHTML=`<img src=\'$2\' alt=\'$1\'>`">$1</span>' },
+        // { regex: /\[(.+?)\]\((.+?)\)/g, replace: '<a href="$2">$1</a>' },
+        { regex: /\[(.+?)\]\((.+?)\)/g, replace: '<span class="click-to-load prefix-link-icon" onclick="this.outerHTML=`<a href=\'$2\' target=\'_blank\' class=\'suffix-external\'>$1</a>`">$1</span>' },
+        { regex: /\n/g, replace: '<br>' },
+    ];
+
+    let output = input;
+    for (const rule of rules) {
+        output = output.replace(rule.regex, rule.replace);
+    }
+
+    return output.replace(`<span class="language-identifier"></span>`, '');
+}
+
 async function fetchComments() {
     try {
         const response = await fetch(`${apiURL}?id=${postId}`);
@@ -39,7 +67,7 @@ async function fetchComments() {
             replyButton.onclick = () => replyToComment(comment.username);
 
             const content = document.createElement('p');
-            content.textContent = decodeHtmlSpecialChars(comment.content);
+            content.innerHTML = markdownToHtml(decodeHtmlSpecialChars(comment.content));
 
             commentElement.appendChild(username);
             commentElement.appendChild(timestamp);
@@ -103,7 +131,7 @@ async function submitComment(token) {
         resultDisplay.textContent = 'An error occurred while submitting the comment:\n' + error;
         resultDisplay.className = 'error';
     }
-    
+
     submitButton.disabled = false;
     submitButton.innerText = submitButtonOriginalText;
 }
